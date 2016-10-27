@@ -8,7 +8,7 @@ install:
   - npm install dockerlint
 
 script:
-  - dockerlint Dockerfile
+  - dockerlint */Dockerfile
 
 notifications:
   email:
