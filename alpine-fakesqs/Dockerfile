@@ -7,7 +7,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 	gem install fake_sqs --no-ri --no-rdoc
 
 # Add the files
-ADD container_confs /
+COPY container_confs /
 
 EXPOSE 4568
 
@@ -19,7 +19,7 @@ ENV LINK_USERNAME convox
 ENV LINK_PASSWORD password
 ENV LINK_PATH /
 
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "fakesqs" ]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["fakesqs"]
 
 # /usr/bin/fake_sqs -v -p 4568 --database /var/data/sqs/queues --log /proc/self/fd/1 --no-daemonize
