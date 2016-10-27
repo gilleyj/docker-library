@@ -59,6 +59,5 @@ RUN ln -s /usr/bin/php7 /usr/bin/php && \
 # Expose the ports for nginx
 EXPOSE 80 443
 
-# Define the entry point
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "nginx" ]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx"]
