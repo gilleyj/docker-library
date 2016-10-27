@@ -8,10 +8,10 @@ install:
   - npm install dockerlint
 
 before_script:
-  - ./_build_test.sh
+  - bash ./_build_test.sh
 
 script:
-  - ./_test.sh
+  - bash ./_test.sh
 
 notifications:
   email:
