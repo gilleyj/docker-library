@@ -16,6 +16,6 @@ ENV LINK_USERNAME convox
 ENV LINK_PASSWORD password
 ENV LINK_PATH /bucket
 
-ENTRYPOINT [ "/usr/bin/fakes3","-p","4569","-r","/var/data/fakes3"]
+ENTRYPOINT ["/usr/bin/fakes3","-p","4569","-r","/var/data/fakes3"]
 
 # /usr/bin/fakes3 -p 4569 -r /var/lib/fakes3
