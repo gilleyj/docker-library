@@ -7,8 +7,11 @@ branches:
 install:
   - npm install dockerlint
 
+before_script:
+  - bash ./_build_test.sh
+
 script:
-  - dockerlint */Dockerfile
+  - bash ./_test.sh
 
 notifications:
   email:
