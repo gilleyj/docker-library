@@ -1,4 +1,4 @@
-NAME = cheggwpt/alpine-fakesqs
+NAME = cheggwpt/alpine-nginx-php7fpm
 VERSION = 0.2.1
 
 .PHONY: all build test tag_latest release ssh

@@ -1,21 +1,43 @@
-FROM alpine:edge
+FROM alpine:3.4
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-	apk add --no-cache bash ruby ruby-bundler ca-certificates && \
+# if edge libraries are needed use the following:
+# RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
+# install base packages - BASH should only be used for debugging, it's almost a meg in size
+# install ruby basic packages
+# clean up the apk cache (no-cache still caches the indexes)
+# Make the app directory
+# install the fake s3 gem without docs
+RUN	apk --update --no-cache add \
+	--virtual .base_package bash ca-certificates \
+	--virtual .basic_ruby ruby ruby-bundler && \
 	rm -rf /var/cache/apk/* && \
 	mkdir -p /var/data/fakes3 && \
 	gem install fakes3 --no-ri --no-rdoc
 
-EXPOSE 4569
+# Add the files
+COPY container_confs /
 
+# fake s3 environment vars
 ENV S3_USERNAME convox
 ENV S3_PASSWORD password
 ENV S3_PATH /bucket
+ENV S3_PORT 4569
 
+# LINK env vars for convox
 ENV LINK_USERNAME convox
 ENV LINK_PASSWORD password
 ENV LINK_PATH /bucket
+ENV LINK_PORT 4569
 
-ENTRYPOINT ["/usr/bin/fakes3","-p","4569","-r","/var/data/fakes3"]
+# expose the fake s3 port
+EXPOSE 4569
 
-# /usr/bin/fakes3 -p 4569 -r /var/lib/fakes3
+# expose the app volume
+VOLUME ["/var/data/fakes3"]
+
+# the entry point definition
+ENTRYPOINT ["/entrypoint.sh"]
+
+# default command for entrypoint.sh
+CMD ["fakes3"]

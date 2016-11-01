@@ -6,10 +6,10 @@ set -e
 HOST_IP=`/bin/grep $HOSTNAME /etc/hosts | /usr/bin/cut -f1`
 echo "started with ip: ${HOST_IP}..."
 
-if [ "$1" == "fakesqs" ]; then
-	echo "starting fakesqs with...."
-	echo /usr/bin/fake_sqs -v -o $HOST_IP -p 4568 --database /var/data/sqs/queues --log /proc/self/fd/1 --no-daemonize
-	/usr/bin/fake_sqs -v -o $HOST_IP -p 4568 --database /var/data/sqs/queues --log /proc/self/fd/1 --no-daemonize
+if [ "$1" == "fakes3" ]; then
+	echo "starting fakes3 with...."
+	echo /usr/bin/fakes3 -p 4569 -r /var/data/fakes3
+	/usr/bin/fakes3 -p 4569 -r /var/data/fakes3
 elif [ "$1" == "bash" ] || [ "$1" == "shell" ]; then
 	echo "starting /bin/bash with...."
 	/bin/bash --rcfile /etc/bashrc

@@ -13,7 +13,7 @@ RUN	apk --update --no-cache add \
 	--virtual .basic_ruby ruby ruby-bundler && \
 	rm -rf /var/cache/apk/* && \
 	mkdir -p /var/data/sqs && \
-	gem install fake_sqs --no-ri --no-rdoc
+	gem install fake_sqs -v 0.3.1 --no-ri --no-rdoc
 
 # Add the files
 COPY container_confs /
