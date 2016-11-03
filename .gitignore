@@ -1,4 +1,5 @@
 _test.sh
+_make.sh
 # Object files
 *.o
 *.ko

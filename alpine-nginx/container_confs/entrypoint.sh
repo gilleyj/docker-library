@@ -10,7 +10,7 @@ if [ "$1" == "supervisord" ]; then
 	echo "starting services...."
 	/usr/bin/supervisord -n -c /etc/supervisord.conf
 elif [ "$1" == "bash" ] || [ "$1" == "shell" ]; then
-	echo "starting /bin/bash with...."
+	echo "starting /bin/bash...."
 	/bin/bash --rcfile /etc/bashrc
 else
 	echo "Running something else"

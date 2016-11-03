@@ -1,7 +1,7 @@
-FROM alpine:3.4
+FROM alpine:edge
 
 # if edge libraries are needed use the following:
-# 
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 # install base packages - BASH should only be used for debugging, it's almost a meg in size
 # install ruby basic packages
@@ -9,19 +9,9 @@ FROM alpine:3.4
 # Make the app directory
 # install the fake sqs gem without docs
 RUN	apk --update --no-cache add \
-	--virtual .base_package bash ca-certificates \
-	--virtual .basic_ruby ruby ruby-bundler && \
-	rm -rf /var/cache/apk/* && \
-	mkdir -p /var/data/sqs && \
-	gem install fake_sqs --no-ri --no-rdoc
-
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN	apk --update --no-cache add \
-	--virtual .base_package bash ca-certificates \
-	--virtual .nginx_service \
-		nginx \
+	--virtual .base_package bash ca-certificates curl \
+	--virtual .php_service \
 		supervisor \
-		nodejs \
 		mysql-client \
 		php7 \
 		php7-bcmath \
@@ -66,18 +56,16 @@ RUN	sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini && 
 	sed -i -e 's/;error_log = php_errors.log/error_log = \/proc\/self\/fd\/1/g' /etc/php7/php.ini
 
 # Make php7 the default php
-# Add the process control dirs for nginx and supervisord as well as webroot
-# own up the nginx control dir
+# Add the process control dirs for php and supervisord as well as webroot
 # own up the webroot dir
 # make it user/group read write
 RUN ln -s /usr/bin/php7 /usr/bin/php && \
-	mkdir -p /run/php /run/nginx /run/supervisord /webroot && \
-	chown -R nginx:www-data /run/nginx && \
+	mkdir -p /run/php /run/supervisord /webroot && \
 	chown -R www-data:www-data /run/php /webroot && \
 	chmod -R ug+rw /webroot
 
 # Expose the ports for nginx
-EXPOSE 80 443
+EXPOSE 9000
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx"]
+CMD ["php"]

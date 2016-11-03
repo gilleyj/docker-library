@@ -11,7 +11,7 @@ if [ "$1" == "fakesqs" ]; then
 	echo /usr/bin/fake_sqs -v -o $HOST_IP -p 4568 --database /var/data/sqs/queues --log /proc/self/fd/1 --no-daemonize
 	/usr/bin/fake_sqs -v -o $HOST_IP -p 4568 --database /var/data/sqs/queues --log /proc/self/fd/1 --no-daemonize
 elif [ "$1" == "bash" ] || [ "$1" == "shell" ]; then
-	echo "starting /bin/bash with...."
+	echo "starting /bin/bash...."
 	/bin/bash --rcfile /etc/bashrc
 else
 	echo "Running something else"

@@ -16,6 +16,7 @@ RUN	apk --update --no-cache add \
 	gem install fake_sqs -v 0.3.1 --no-ri --no-rdoc
 
 # Add the files
+# this container has a "patch" for fake_sqs 0.3.1 that flushes the cache for each "msg" for stdio logging
 COPY container_confs /
 
 # fake SQS environment vars

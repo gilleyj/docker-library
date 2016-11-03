@@ -10,6 +10,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 # install the fake sqs gem without docs
 RUN	apk --update --no-cache add \
 	--virtual .base_package bash ca-certificates \
+	--virtual .build_package build-base git \
 	--virtual .nginx_service \
 		nginx \
 		supervisor \
