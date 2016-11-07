@@ -9,7 +9,8 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 # Make the app directory
 # install the fake sqs gem without docs
 RUN	apk --update --no-cache add \
-	--virtual .base_package bash ca-certificates curl \
+	--virtual .base_package bash ca-certificates \
+	--virtual .build_package git curl php7-dev build-base autoconf \
 	--virtual .php_service \
 		supervisor \
 		mysql-client \
@@ -63,6 +64,21 @@ RUN ln -s /usr/bin/php7 /usr/bin/php && \
 	mkdir -p /run/php /run/supervisord /webroot && \
 	chown -R www-data:www-data /run/php /webroot && \
 	chmod -R ug+rw /webroot
+
+# build phpiredis
+RUN apk --update --no-cache add \
+	--virtual .redis_tools hiredis hiredis-dev && \
+	cd /tmp && \
+	git clone https://github.com/nrk/phpiredis.git phpiredis && \
+	cd phpiredis && \
+	ln -s /usr/bin/php-config7 /usr/bin/php-config && \
+	/usr/bin/phpize7 && \
+	./configure && \
+	make && \
+	make install && \
+	echo 'extension=phpiredis.so' > /etc/php7/conf.d/33-phpiredis.ini && \
+	cd /tmp && \
+	rm -rf phpiredis /var/cache/apk/* 
 
 # Expose the ports for nginx
 EXPOSE 9000

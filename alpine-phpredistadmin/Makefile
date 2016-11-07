@@ -1,5 +1,5 @@
-NAME = cheggwpt/alpine-php7fpm
-VERSION = 0.2.4
+NAME = cheggwpt/alpine-phpredisadmin
+VERSION = 0.1.0
 
 .PHONY: all build test tag_latest release ssh
 

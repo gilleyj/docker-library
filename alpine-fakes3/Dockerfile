@@ -23,6 +23,7 @@ ENV S3_USERNAME convox
 ENV S3_PASSWORD password
 ENV S3_PATH /bucket
 ENV S3_PORT 4569
+ENV FAKES3_URL
 
 # LINK env vars for convox
 ENV LINK_USERNAME convox
