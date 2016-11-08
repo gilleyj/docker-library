@@ -1,6 +1,6 @@
 FROM composer/composer:master-alpine
 
-ADD . /src/app/
+COPY . /src/app/
 WORKDIR /src/app
 
 RUN \
@@ -9,4 +9,4 @@ RUN \
 
 EXPOSE 80
 
-ENTRYPOINT [ "php", "-S", "0.0.0.0:80" ]
+ENTRYPOINT ["php","-S","0.0.0.0:80"]

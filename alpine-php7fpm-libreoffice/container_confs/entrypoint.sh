@@ -6,12 +6,11 @@ set -e
 HOST_IP=`/bin/grep $HOSTNAME /etc/hosts | /usr/bin/cut -f1`
 echo "started with ip: ${HOST_IP}..."
 
-if [ "$1" == "redis" ]; then
-	echo "starting redis with...."
-	echo /usr/bin/redis-server --protected-mode no --loglevel verbose 
-	/usr/bin/redis-server --protected-mode no --loglevel verbose 
+if [ "$1" == "php" ]; then
+	echo "starting services...."
+	/usr/bin/supervisord -n -c /etc/supervisord.conf
 elif [ "$1" == "bash" ] || [ "$1" == "shell" ]; then
-	echo "starting /bin/bash...."
+	echo "starting /bin/bash with...."
 	/bin/bash --rcfile /etc/bashrc
 else
 	echo "Running something else"

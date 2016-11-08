@@ -38,13 +38,15 @@ while (TRUE) {
     $server_port = 6379;
   }
 
-  $config['servers'][] = array(
+  $array = array(
       'name'   => $server_name,
       'host'   => $server_host,
       'port'   => $server_port,
-      'auth'   => $server_pass,
       'filter' => '*',
   );
+  if($server_pass != '') $array['auth'] = $server_pass;
+
+  $config['servers'][] = $array;
 
   $i++;
 }

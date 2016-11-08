@@ -22,7 +22,7 @@ ENV JAVA_ALPINE_VERSION 8.92.14-r1
 RUN	apk --update --no-cache add \
 	--virtual .base_package bash ca-certificates wget supervisor \
 	--virtual .java_package openjdk8="$JAVA_ALPINE_VERSION" && \
-	[ "$JAVA_HOME" = "$(docker-java-home)" ] && \
+	["$JAVA_HOME"="$(docker-java-home)"] && \
 	update-ca-certificates && \
 	rm -rf /var/cache/apk/* && \
 	mkdir -p /run/supervisord
